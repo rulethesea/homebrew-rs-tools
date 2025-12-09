@@ -1,8 +1,8 @@
 class RsDnsGuard < Formula
   desc "RS tool to enforce Google DNS on macOS network services"
-  homepage "https://github.com/tony-rts/rs-tools"
-  url "https://github.com/tony-rts/rs-tools/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+  homepage "https://github.com/tony-rts/homebrew-rs-tools"
+  url "https://github.com/tony-rts/homebrew-rs-tools/archive/refs/tags/v0.1.0.tar.gz"
+  sha256 "4182d6bdd88272ddc3e84a6e570b740f4ba384936622ed890d4674b0cf27f68e"
   license "MIT"
 
   def install
