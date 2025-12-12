@@ -1,8 +1,8 @@
 class RsPolicy < Formula
   desc "RS tool to enforce Google DNS on macOS network services"
-  homepage "https://github.com/tony-rts/homebrew-rs-tools"
-  url "https://github.com/tony-rts/homebrew-rs-tools/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "4182d6bdd88272ddc3e84a6e570b740f4ba384936622ed890d4674b0cf27f68e"
+  homepage "https://github.com/rulethesea/homebrew-rs-tools"
+  url "https://github.com/rulethesea/homebrew-rs-tools/archive/refs/tags/v1.0.0.tar.gz"
+  sha256 "88c828aaefa6651f5f20116feac596804a052d95eb483139f864c08852cb0906"
   license "MIT"
 
   def install
