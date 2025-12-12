@@ -5,12 +5,11 @@ class RsPolicy < Formula
   sha256 "88c828aaefa6651f5f20116feac596804a052d95eb483139f864c08852cb0906"
   license "MIT"
 
-  # Nếu bạn muốn chắc dùng bash của Homebrew, giữ dòng này.
-  # Nếu không cần, có thể bỏ.
-  depends_on "bash" => :run
+  # Tuỳ chọn: nếu bạn muốn chắc chắn dùng bash của Homebrew
+  # depends_on "bash" => :run
 
   def install
-    # Đảm bảo tất cả file .sh trong project đều có quyền thực thi
+    # 1) Cấp quyền thực thi cho tất cả file .sh trong repo
     script_paths = Dir[
       "*.sh",
       "welcome/**/*.sh",
@@ -18,21 +17,27 @@ class RsPolicy < Formula
       "policy/**/*.sh",
       "lib/**/*.sh"
     ]
-    chmod 0755, script_paths
+    chmod 0o755, script_paths
 
-    # Đưa main.sh và toàn bộ thư mục phụ trợ vào libexec
+    # 2) Đưa main.sh và thư mục phụ trợ vào libexec
     libexec.install "main.sh", "welcome", "profile", "policy", "lib"
 
-    # Tạo wrapper rs-policy trong bin, trỏ tới main.sh trong libexec
-    (bin/"rs-policy").write_env_script libexec/"main.sh",
-      PATH: PATH.new(Formula["bash"].opt_bin, libexec, ENV["PATH"])
-    # Nếu bỏ depends_on "bash", thay dòng trên bằng:
-    # (bin/"rs-policy").write_env_script libexec/"main.sh",
-    #   PATH: PATH.new(libexec, ENV["PATH"])
+    # 3) Tạo wrapper rs-policy trong bin
+    # - cd vào libexec để các đường dẫn ./welcome/... hoạt động đúng
+    # - thêm libexec vào PATH nếu cần
+    wrapper = bin/"rs-policy"
+    wrapper.write <<~EOS
+      #!/usr/bin/env bash
+      # Đảm bảo libexec nằm trong PATH (tuỳ bạn có cần hay không)
+      export PATH="#{libexec}:$PATH"
+      cd "#{libexec}"
+      exec "#{libexec}/main.sh" "$@"
+    EOS
+    chmod 0o755, wrapper
   end
 
   test do
-    # Test đơn giản: chỉ cần chạy xem có exit được là ok (tránh require user input)
+    # Test đơn giản: gọi rs-policy và kiểm tra exit code 0 (nếu script không cần interative)
     system "#{bin}/rs-policy"
   end
 end
