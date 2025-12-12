@@ -1,5 +1,5 @@
 
-brew tap tony-rts/rs-tools
+brew tap rulethesea/rs-tools
 brew install rs-policy
 
 https://github.com/tony-rts/homebrew-rs-tools/archive/refs/tags/v0.1.0.tar.gz
